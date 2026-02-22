@@ -7,14 +7,14 @@ type SyncSet[T comparable] struct {
 	mu  sync.RWMutex
 }
 
-func NewSafe[T comparable]() SyncSet[T] {
+func NewSync[T comparable]() SyncSet[T] {
 	baseSet := New[T]()
 	return SyncSet[T]{
 		set: &baseSet,
 	}
 }
 
-func NewSafeSized[T comparable](capacity int) SyncSet[T] {
+func NewSyncSized[T comparable](capacity int) SyncSet[T] {
 	baseSet := NewSized[T](capacity)
 	return SyncSet[T]{
 		set: &baseSet,
