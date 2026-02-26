@@ -1,6 +1,9 @@
 package set
 
-import "sync"
+import (
+	"iter"
+	"sync"
+)
 
 type SyncSet[T comparable] struct {
 	set *Set[T]
@@ -18,6 +21,14 @@ func NewSyncSized[T comparable](capacity int) SyncSet[T] {
 	baseSet := NewSized[T](capacity)
 	return SyncSet[T]{
 		set: &baseSet,
+	}
+}
+
+func (s *SyncSet[T]) All() iter.Seq[T] {
+	return func(yield func(T) bool) {
+		s.mu.RLock()
+		defer s.mu.RUnlock()
+		s.set.All()
 	}
 }
 

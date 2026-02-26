@@ -1,5 +1,10 @@
 package set
 
+import (
+	"iter"
+	"maps"
+)
+
 type Set[T comparable] struct {
 	items map[T]struct{}
 }
@@ -14,6 +19,10 @@ func NewSized[T comparable](capacity int) Set[T] {
 	return Set[T]{
 		items: make(map[T]struct{}, capacity),
 	}
+}
+
+func (s *Set[T]) All() iter.Seq[T] {
+	return maps.Keys(s.items)
 }
 
 func (s *Set[T]) Add(item T) bool {
